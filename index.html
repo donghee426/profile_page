@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <title>json 사용</title>
+</head>
+<body>
+    <p id="img"><img src="" alt="프로필이미지"></p>
+    <h1>홍길동</h1>
+    <ul>
+        <li>phone : <span></span></li>
+        <li>email : <span></span></li>
+        <li>uuid : <span></span></li>
+        <li>username : <span></span></li>
+    </ul>
+    <script>
+        fetch("https://randomuser.me/api/").then((response)=>{
+            if(response.ok){
+                console.log("성공");
+                //json 데이터를 자바스크립트 객체로 변환
+                return response.json();
+            }
+        }).then((data)=>{
+            console.log(data);
+            const img = data.results[0].picture.large;
+            const firstName = data.results[0].name.first;
+            const lastName = data.results[0].name.last;
+            const name = firstName +` `+ lastName;
+            const phone = data.results[0].phone;
+            const email = data.results[0].email;
+            const uuid = data.results[0].login.uuid;
+            const username = data.results[0].login.username;
+            document.querySelector("h1").innerHTML = `${firstName} ${lastName}`;            
+            document.querySelector("#img img").src = img;            
+            document.querySelector("ul li:nth-child(1) span").innerHTML = `${phone}`;
+            document.querySelector("ul li:nth-child(2) span").innerHTML = `${email}`;
+            document.querySelector("ul li:nth-child(3) span").innerHTML = `${uuid}`;
+            document.querySelector("ul li:nth-child(4) span").innerHTML = `${username}`;
+        });
+    </script>
+</body>
+</html>
